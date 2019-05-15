@@ -138,7 +138,21 @@ class SiteController extends Controller
     }
   }
 
-  public function actionPublish($id) {
+  public function actionPublish($id)
+  {
+    $data = HhData::findOne(1);
+    $client = new Client();
+    $response = $client->createRequest()
+      ->setMethod('POST')
+      ->setUrl("https://api.hh.ru/resumes/{$id}/publish")
+      ->setHeaders([
+        'Authorization' => 'Bearer ' . $data->access_token,
+        'User-Agent' => 'api-test-agent'
+      ])
+      ->send();
+    if ($response->isOk) {
+      return $this->redirect('resumes');
+    }
   }
 
 }
