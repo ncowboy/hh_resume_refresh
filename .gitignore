@@ -1,3 +1,5 @@
 vendor
 .idea
 runtime
+config/hh.php
+data/db.db
